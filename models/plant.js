@@ -55,6 +55,18 @@ class Plant {
 
         if (!plant) throw new NotFoundError(`No plant: ${id}`)
 
+        const photoRes = await db.query (`SELECT id,
+                        title,
+                        description,
+                        img,
+                        username,
+                        plant_id AS "plantId",
+                        post_id AS "postId"
+                    FROM photos
+                    WHERE plant_id = $1`,
+                    [id]);
+        plant.photos = photoRes.rows;
+
         return plant;
     }
 

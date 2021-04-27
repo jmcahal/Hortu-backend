@@ -22,4 +22,51 @@ router.get("/", async function (req, res, next) {
     }
 });
 
+// GET/photoId => {photo: [{title, description, img},..]}
+
+router.get("/:id", async function (req, res, next) {
+    try {
+        const photo = await Photo.get(req.params.id);
+        return res.json({ photo });
+
+    }catch (err) {
+        return next(err);
+    }
+});
+
+// PATCH /[id] => {data} => Return {id, title, description, img, etc...}
+
+router.patch("/:id", async function (req, res, next) {
+    try {
+        const photo = await Photo.update(req.params.id, req.body);
+        return res.json({ photo });
+
+    }catch (err) {
+        return next(err);
+    }
+});
+
+// POST/ => {data} => Return {id, title, description, img, etc...}
+
+router.post("/", async function (req, res, next) {
+    try {
+        const photo = await Photo.create(req.body);
+        return res.status(201).json({ photo });
+
+    }catch (err) {
+        return next(err);
+    }
+});
+
+// DELETE/[id]=>{title}
+
+router.delete("/:id", async function (req, res, next) {
+    try {
+        await Photo.delete(req.params.id);
+        return res.json({deleted: req.params.id });
+    } catch (err) {
+        return next(err);
+    }
+});
+
 module.exports = router;

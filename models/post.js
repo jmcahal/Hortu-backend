@@ -36,6 +36,18 @@ class Post {
 
         if (!post) throw new NotFoundError(`No post with the id: ${id}`)
 
+        const photoRes = await db.query (`SELECT id,
+                        title,
+                        description,
+                        img,
+                        username,
+                        plant_id AS "plantId",
+                        post_id AS "postId"
+                    FROM photos
+                    WHERE post_id = $1`,
+                    [id]);
+        post.photos = photoRes.rows;
+
         return post;
     };
 
@@ -96,9 +108,9 @@ class Post {
         const post = result.rows[0];
 
         return post;    
-        }
+    };
 
-        static async delete(id) {
+    static async delete(id) {
         const result = await db.query(
         `DELETE FROM posts
         WHERE id = $1
@@ -108,7 +120,7 @@ class Post {
         const post = result.rows[0];
 
         if (!post) throw new NotFoundError (`No post with id: ${id}`);
-        };
+    };
 
 }
 

@@ -30,7 +30,7 @@ class User {
 
         return result.rows;
     }
-
+    // find all info on a single user
     static async get(username) {
         const result = await db.query(
             `SELECT username,
@@ -47,7 +47,32 @@ class User {
 
         if (!user) throw new NotFoundError(`No user: ${username}`);
 
+        const photoRes = await db.query (`SELECT id,
+                        title,
+                        description,
+                        img,
+                        username,
+                        plant_id AS "plantId",
+                        post_id AS "postId"
+                    FROM photos
+                    WHERE username = $1
+                    ORDER BY id`,
+                    [username]);
+
+        user.photos = photoRes.rows;
+
+        const postRes = await db.query (`SELECT id,
+                        username,
+                        plant_id AS "plantId",
+                        title,
+                        post_body AS "postBody"
+                    FROM posts
+                    WHERE username = $1`,
+                    [username]);
+        user.posts = postRes.rows;
+        
         return user;
+
     }
 
     static async update(username,data) {
