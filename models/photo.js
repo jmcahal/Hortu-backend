@@ -8,13 +8,14 @@ class Photo {
     //  functions for photos.
 
     static async findAll() {
-        let query = `SELECT title,
-                            description,
-                            img,
-                            username,
-                            plant_id,
-                            post_id
-                    FROM photos`
+        let query = `SELECT  ph.title,
+                             ph.description,
+                             ph.img,
+                             ph.username,
+                             ph.plant_id,
+                             ph.post_id
+                    FROM photos ph
+                    LEFT JOIN posts AS p ON p.id = ph.post_id`
 
         const photosRes = await db.query(query);
         return photosRes.rows;

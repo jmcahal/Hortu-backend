@@ -11,12 +11,12 @@ class Post {
     // Find all posts.
 
     static async findAll(){
-        let query = `SELECT title,
+        let query = `SELECT id, title,
                             post_body AS "postBody",
                             username,
                             plant_id AS "plantId"
                     FROM posts
-                    ORDER BY username`;
+                    LEFT JOIN `;
         const postsRes = await db.query(query);
         return postsRes.rows;
     }
