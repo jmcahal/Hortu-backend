@@ -5,13 +5,14 @@
 const express = require("express");
 
 const { BadRequestError } = require("../expressError");
+const { checkAuthenticated } = require("../middleware/auth");
 const User = require('../models/user');
 
 const router = new express.Router();
 
 // GET / => {users: [{username, password, first_name, etc.},..]}
 
-router.get("/", async function (req, res, next) {
+router.get("/", checkAuthenticated, async function (req, res, next) {
     const q = req.query;
     try {
         const users = await User.findAll(q);

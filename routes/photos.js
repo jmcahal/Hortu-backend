@@ -5,13 +5,14 @@
 const express = require("express");
 
 const { BadRequestError } = require("../expressError");
+const { checkAuthenticated } = require("../middleware/auth");
 const Photo = require('../models/photo');
 
 const router = new express.Router();
 
 // GET / => {photos: [{title, description, img},..]}
 
-router.get("/", async function (req, res, next) {
+router.get("/", checkAuthenticated, async function (req, res, next) {
     const q = req.query;
     try {
         const photos = await Photo.findAll(q);
@@ -24,7 +25,7 @@ router.get("/", async function (req, res, next) {
 
 // GET/photoId => {photo: [{title, description, img},..]}
 
-router.get("/:id", async function (req, res, next) {
+router.get("/:id", checkAuthenticated, async function (req, res, next) {
     try {
         const photo = await Photo.get(req.params.id);
         return res.json({ photo });
@@ -36,7 +37,7 @@ router.get("/:id", async function (req, res, next) {
 
 // PATCH /[id] => {data} => Return {id, title, description, img, etc...}
 
-router.patch("/:id", async function (req, res, next) {
+router.patch("/:id", checkAuthenticated, async function (req, res, next) {
     try {
         const photo = await Photo.update(req.params.id, req.body);
         return res.json({ photo });
@@ -48,7 +49,7 @@ router.patch("/:id", async function (req, res, next) {
 
 // POST/ => {data} => Return {id, title, description, img, etc...}
 
-router.post("/", async function (req, res, next) {
+router.post("/", checkAuthenticated, async function (req, res, next) {
     try {
         const photo = await Photo.create(req.body);
         return res.status(201).json({ photo });
@@ -60,7 +61,7 @@ router.post("/", async function (req, res, next) {
 
 // DELETE/[id]=>{title}
 
-router.delete("/:id", async function (req, res, next) {
+router.delete("/:id", checkAuthenticated, async function (req, res, next) {
     try {
         await Photo.delete(req.params.id);
         return res.json({deleted: req.params.id });

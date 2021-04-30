@@ -137,7 +137,7 @@ class Plant {
                         growingTips 
                     }) {
         const checkForDuplicate = await db.query(
-            `SELECT sci_name 
+            `SELECT sci_name AS "sciName"
             FROM plants
             WHERE sci_name = $1`,
             [sciName]
@@ -151,13 +151,13 @@ class Plant {
                 life_cycle, spacing, height, light_soil_requirements,
                 plant_use, growing_tips)
             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
-            RETURNING id, common_name AS "commonName",
+            RETURNING common_name AS "commonName",
                 sci_name AS "sciName",
                 seed_specs AS "seedSpecs", 
                 transplant,
                 culture, 
                 germination, 
-                disease_pests AS "disease_pests", 
+                disease_pests AS "diseasePests", 
                 harvest,
                 life_cycle AS "lifeCycle", 
                 spacing, 

@@ -15,8 +15,7 @@ class Post {
                             post_body AS "postBody",
                             username,
                             plant_id AS "plantId"
-                    FROM posts
-                    LEFT JOIN `;
+                    FROM posts`;
         const postsRes = await db.query(query);
         return postsRes.rows;
     }

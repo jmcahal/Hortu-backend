@@ -6,6 +6,7 @@ const { sqlForPartialUpdate } = require("../helpers/sql");
 const { 
     BadRequestError, 
     NotFoundError,
+    UnauthorizedError
 } = require('../expressError');
 
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
@@ -32,8 +33,9 @@ class User {
     }
     // find all info on a single user
     static async get(username) {
+        try {
         const result = await db.query(
-            `SELECT username,
+            `SELECT id, username,
                     first_name AS "firstName",
                     last_name AS "lastName",
                     email,
@@ -45,7 +47,7 @@ class User {
 
         const user = result.rows[0]
 
-        if (!user) throw new NotFoundError(`No user: ${username}`);
+        // if (!user) throw new NotFoundError(`No user: ${username}`);
 
         const photoRes = await db.query (`SELECT id,
                         title,
@@ -72,7 +74,56 @@ class User {
         user.posts = postRes.rows;
         
         return user;
+        } catch(e) { return e; }
 
+    }
+
+    // Authenticate User
+    static async authenticate(username, password) {
+       try{
+        // try to find the user first
+        const result = await db.query(
+            `SELECT username,
+                password,
+                is_admin AS "isAdmin"
+            FROM users
+            WHERE username = $1`,
+            [username],
+        );
+
+        const user = result.rows[0];
+
+        if (user) {
+        // compare hashed password to a new hash from password
+        const isValid = await bcrypt.compare(password, user.password);
+            if (isValid === true) {
+                // delete user.password;
+                return user;
+            }
+        }
+        }catch(err){
+            // throw new UnauthorizedError("Invalid username/password");
+            return err;
+        }
+        
+    }
+
+    // find all info on a single user
+    static async getInfo(username) {
+        try {
+        const result = await db.query(
+            `SELECT username,
+                    password,
+                    is_admin AS "isAdmin"
+            FROM users
+            WHERE username = $1`,
+            [username]
+        );
+        const user = result.rows[0];
+        return user;
+        } catch(e){
+            return e;
+        }
     }
 
     static async update(username,data) {
@@ -82,7 +133,8 @@ class User {
             {
                 firstName: "first_name",
                 lastName: "last_name",
-                email: "email"
+                email: "email",
+                isAdmin: "is_admin"
             }
         );
         const usernameVarIdx = "$" + (values.length + 1);

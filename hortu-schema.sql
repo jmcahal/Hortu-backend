@@ -1,4 +1,5 @@
 CREATE TABLE users (
+    id SERIAL UNIQUE,
     username VARCHAR(15) PRIMARY KEY CHECK (username = lower(username)),
     password TEXT NOT NULL,
     first_name TEXT NOT NULL,

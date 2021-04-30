@@ -1,11 +1,12 @@
-INSERT INTO users (username, password, first_name, last_name, email, is_admin)
-VALUES ( 'testuser',
+INSERT INTO users (id,username, password, first_name, last_name, email, is_admin)
+VALUES ( 1,
+            'testuser',
             'password',
             'Test',
             'User',
             'test@mail.com',
             FALSE),
-        ( 'testadmin',
+        ( 2,'testadmin',
             'password',
             'Test',
             'Admin',
