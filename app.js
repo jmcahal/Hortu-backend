@@ -92,16 +92,18 @@ passport.deserializeUser(function(id, done){
 
 
 app.post("/login", passport.authenticate('local'), (req, res, next) => {
-    console.log(req.user);
-   
+    
+    console.log(` response: ${req.user.user}`);
+    console.log(req.session);
+    console.log('Cookies: ', req.session.passport)
     // make sure to respond to the request
-    res.send(req.user);
+    res.json(req.user.user);
 })
 
 app.get('/logout', function (req, res){
     console.log("logging out");
-    req.session.destroy();
-    req.logout();
+    req.logOut();
+    console.log("logged out");
     res.redirect('/plants')
 });
 

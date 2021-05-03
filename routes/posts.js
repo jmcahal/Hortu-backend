@@ -24,7 +24,7 @@ router.get("/", async function (req, res, next) {
 });
 // GET /[id] => {common_name, sci_name, etc...}
 
-router.get("/:id", checkAuthenticated, async function (req, res, next) {
+router.get("/:id", async function (req, res, next) {
     try {
         const post = await Post.get(req.params.id);
         return res.json({ post });

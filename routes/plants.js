@@ -12,7 +12,7 @@ const router = new express.Router();
 
 // GET / => {plants: [{common_name, sci_name, etc},..]}
 
-router.get("/", checkAuthenticated, async function (req, res, next) {
+router.get("/", async function (req, res, next) {
     const q = req.query;
     try {
         const plants = await Plant.findAll(q);
