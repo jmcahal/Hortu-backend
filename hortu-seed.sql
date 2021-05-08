@@ -11,7 +11,13 @@ VALUES ( 1,
             'Test',
             'Admin',
             'admin@mail.com',
-            TRUE);
+            TRUE),
+        ( 3, 'bobbob',
+             '$2b$13$tkZejD28bs2GYclWTn8ytOCVu0GWj.heSu2tuHoGqczy7mOtA7n0.',
+             'Bobby',
+             'Bob',
+             'bob@mail.com',
+             TRUE);
 
 INSERT INTO plants (common_name,
                     sci_name,
@@ -66,12 +72,18 @@ VALUES ('Tomatoes', 'Solanum lycopersicum',
         'Cut flower. Edible flower.',
         'After seedlings have 3-5 true leaves, grow at 50-55°F/10-13°C nights and 60°F/16°C days. Pinch back to 1 1/2-2" when seedlings are about 3-4" 
             tall to encourage branching.');
+
+INSERT INTO journals (title, 
+                    description,
+                    username)
+VALUES ('Tomoatoes', 'First try at garden tomoatoes!','testuser');
             
 INSERT INTO posts (username,
                     plant_id,
+                    journal_id,
                     title, 
                     post_body)
-VALUES ('testuser', 1, 'Homegrown Tomatoes 2021', 'Planting my tomotoes today. check out the pics!!');
+VALUES ('testuser', 1, 1, 'Homegrown Tomatoes 2021', 'Planting my tomotoes today. check out the pics!!');
 
 INSERT INTO photos (title, 
                     description,
@@ -81,5 +93,6 @@ INSERT INTO photos (title,
                     post_id)
 VALUES ('Tomatoes', 'Garden Tomoatoes', NULL, 'testuser', 1,1),
         ('Snapdragon', 'Orange Snapdragon', NULL, 'testuser', 2, NULL);
+
 
 

@@ -14,7 +14,8 @@ class Post {
         let query = `SELECT id, title,
                             post_body AS "postBody",
                             username,
-                            plant_id AS "plantId"
+                            plant_id AS "plantId",
+                            journal_id AS "journalId"
                     FROM posts`;
         const postsRes = await db.query(query);
         return postsRes.rows;
@@ -26,6 +27,7 @@ class Post {
         const postRes = await db.query (`SELECT id,
                         username,
                         plant_id AS "plantId",
+                        journal_id AS "journalId",
                         title,
                         post_body AS "postBody"
                     FROM posts
@@ -68,6 +70,7 @@ class Post {
                             WHERE id = ${idVarIdx}
                             RETURNING username,
                                 plant_id AS "plantId",
+                                journal_id AS "journalId",
                                 title,
                                 post_body AS "postBody"`;
         const result = await db.query(querySql, [...values, id]);
@@ -82,24 +85,27 @@ class Post {
 
     static async create({
         username,
-        plantId,
+        journalId,
         title,
         postBody}) {
 
         const result = await db.query(
         `INSERT INTO posts
         (username, 
-            plant_id, 
+            plant_id,
+            journal_id, 
             title, 
             post_body)
-        VALUES ($1,$2,$3,$4)
+        VALUES ($1,$2,$3,$4, $5)
         RETURNING username, 
-            plant_id AS "plantId", 
+            plant_id AS "plantId",
+            journal_id AS "journalId"
             title, 
             post_body AS "postBody"`,
         [
             username,
             plantId,
+            journalId,
             title,
             postBody
         ]

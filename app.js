@@ -8,6 +8,7 @@ const plantRoutes = require("./routes/plants");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
 const photoRoutes = require("./routes/photos");
+const journalRoutes = require("./routes/journals");
 // const authRoutes = require("./routes/auth");
  
 
@@ -114,6 +115,7 @@ app.use("/plants", plantRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/photos", photoRoutes);
+app.use("/journals", journalRoutes);
 // app.use("/", authRoutes);
 
 // Handle 404 errors

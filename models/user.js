@@ -178,17 +178,15 @@ class User {
                 password,
                 first_name,
                 last_name,
-                email,
-                is_admin)
-            VALUES ($1,$2,$3,$4,$5,$6)
-            RETURNING username, first_name AS "firstName", last_name AS "lastName", email, is_admin AS "isAdmin"`,
+                email)
+            VALUES ($1,$2,$3,$4,$5)
+            RETURNING username, password, first_name AS "firstName", last_name AS "lastName", email`,
             [
                 username,
                 hashedPassword,
                 firstName,
                 lastName,
-                email,
-                isAdmin,
+                email
             ],
         );
 

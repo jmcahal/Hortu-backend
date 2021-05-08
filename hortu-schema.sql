@@ -27,12 +27,22 @@ CREATE TABLE plants (
   growing_tips TEXT
 );
 
+CREATE TABlE journals (
+  id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  username VARCHAR(15) NOT NULL
+    REFERENCES users ON DELETE CASCADE
+);
+
 CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
   username VARCHAR(15)
     REFERENCES users ON DELETE CASCADE,
   plant_id INTEGER
     REFERENCES plants ON DELETE CASCADE,
+  journal_id INTEGER
+    REFERENCES journals ON DELETE CASCADE,
   title TEXT NOT NULL,
   post_body TEXT NOT NULL
 );
