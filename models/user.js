@@ -72,6 +72,15 @@ class User {
                     WHERE username = $1`,
                     [username]);
         user.posts = postRes.rows;
+
+        const journalRes = await db.query (`SELECT id,
+                        username,
+                        title,
+                        description
+                    FROM journals
+                    WHERE username = $1`,
+                    [username]);
+        user.journals = journalRes.rows;
         
         return user;
         } catch(e) { return e; }

@@ -21,9 +21,9 @@ class Post {
         return postsRes.rows;
     }
 
-    // Find a post given its id.
+    // Find a post given its journal id.
 
-    static async get(id) {
+    static async get(journalId) {
         const postRes = await db.query (`SELECT id,
                         username,
                         plant_id AS "plantId",
@@ -31,11 +31,11 @@ class Post {
                         title,
                         post_body AS "postBody"
                     FROM posts
-                    WHERE id = $1`,
-                    [id]);
+                    WHERE journalId = $1`,
+                    [journalId]);
         const post = postRes.rows[0];
 
-        if (!post) throw new NotFoundError(`No post with the id: ${id}`)
+        if (!post) throw new NotFoundError(`No post with the journal id: ${journalId}`)
 
         const photoRes = await db.query (`SELECT id,
                         title,
