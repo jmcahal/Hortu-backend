@@ -31,25 +31,25 @@ class Post {
                         title,
                         post_body AS "postBody"
                     FROM posts
-                    WHERE journalId = $1`,
+                    WHERE journal_id = $1`,
                     [journalId]);
-        const post = postRes.rows[0];
+        const posts = postRes.rows;
 
-        if (!post) throw new NotFoundError(`No post with the journal id: ${journalId}`)
+        if (!posts) throw new NotFoundError(`No posts with the journal id: ${journalId}`)
 
-        const photoRes = await db.query (`SELECT id,
-                        title,
-                        description,
-                        img,
-                        username,
-                        plant_id AS "plantId",
-                        post_id AS "postId"
-                    FROM photos
-                    WHERE post_id = $1`,
-                    [id]);
-        post.photos = photoRes.rows;
+        // const photoRes = await db.query (`SELECT id,
+        //                 title,
+        //                 description,
+        //                 img,
+        //                 username,
+        //                 plant_id AS "plantId",
+        //                 post_id AS "postId"
+        //             FROM photos
+        //             WHERE post_id = $1`,
+        //             [id]);
+        // post.photos = photoRes.rows;
 
-        return post;
+        return posts;
     };
 
     // Update a post given its id.
@@ -86,6 +86,7 @@ class Post {
     static async create({
         username,
         journalId,
+        plantId,
         title,
         postBody}) {
 
@@ -96,10 +97,10 @@ class Post {
             journal_id, 
             title, 
             post_body)
-        VALUES ($1,$2,$3,$4, $5)
+        VALUES ($1,$2,$3,$4,$5)
         RETURNING id, username, 
             plant_id AS "plantId",
-            journal_id AS "journalId"
+            journal_id AS "journalId",
             title, 
             post_body AS "postBody"`,
         [
