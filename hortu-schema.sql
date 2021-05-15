@@ -12,7 +12,7 @@ CREATE TABLE users (
 CREATE TABLE plants (
   id SERIAL PRIMARY KEY,
   common_name TEXT NOT NULL,
-  sci_name TEXT NOT NULL,
+  sci_name TEXT NOT NULL UNIQUE,
   seed_specs TEXT,
   transplant TEXT,
   culture TEXT,
@@ -32,7 +32,9 @@ CREATE TABlE journals (
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   username VARCHAR(15) NOT NULL
-    REFERENCES users ON DELETE CASCADE
+    REFERENCES users ON DELETE CASCADE,
+  plant_id INTEGER
+    REFERENCES plants ON DELETE CASCADE
 );
 
 CREATE TABLE posts (

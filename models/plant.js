@@ -11,7 +11,7 @@ class Plant {
     // Find all plants.
 
     static async findAll(){
-        let query = `SELECT common_name AS "commonName",
+        let query = `SELECT id, common_name AS "commonName",
                             sci_name AS "sciName",
                             seed_specs AS "seedSpecs",
                             transplant,

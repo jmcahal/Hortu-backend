@@ -97,7 +97,7 @@ class Post {
             title, 
             post_body)
         VALUES ($1,$2,$3,$4, $5)
-        RETURNING username, 
+        RETURNING id, username, 
             plant_id AS "plantId",
             journal_id AS "journalId"
             title, 

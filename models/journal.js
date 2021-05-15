@@ -79,21 +79,25 @@ class Journal {
     static async create({
         username,
         title,
-        description}) {
+        description,
+        plantId}) {
 
         const result = await db.query(
         `INSERT INTO journals
         (username, 
             title, 
-            description)
-        VALUES ($1,$2,$3)
-        RETURNING username, 
+            description,
+            plant_id)
+        VALUES ($1,$2,$3,$4)
+        RETURNING id, username, 
             title, 
-            description`,
+            description,
+            plant_id AS "plantId"`,
         [
             username,
             title,
-            description
+            description,
+            plantId
         ]
         );
         const journal = result.rows[0];
