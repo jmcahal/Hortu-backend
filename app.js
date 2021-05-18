@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const { NotFoundError, UnauthorizedError } = require("./expressError");
 const fs = require('fs');
 
+const { cloudinary } = require('./utils/cloudinary');
+
 const plantRoutes = require("./routes/plants");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
@@ -20,9 +22,9 @@ const User = require("./models/user");
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 app.use(morgan("tiny"));
-// app.use(express.urlencoded({extened: false}));
+app.use(express.urlencoded({limit:'50mb', extended: true}));
 
 //session-related libraries
 const session = require("express-session");
@@ -107,6 +109,24 @@ app.get('/logout', function (req, res){
     console.log("logged out");
     res.redirect('/plants')
 });
+
+// experiemental
+app.post('/api/upload', (req,res, next)=> {
+    try {
+        const fileStr = req.body.data;
+        // console.log('in');
+        // console.log(fileStr);
+        // const uploadedResponse = await cloudinary.uploader.
+        // upload( fileStr,
+        //     { upload_preset: 'ml_default'
+        // })
+        console.log(fileStr);
+        res.json({msg: "YAYAY"})
+    }catch(e){
+        console.error(error);
+        res.status(500).json({error: "something went wrong"})
+    }
+})
 
 app.use(express.static(__dirname));
 
