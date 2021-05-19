@@ -9,9 +9,7 @@ const SECRET_KEY = process.env.SECRET_KEY || "secret-dev";
 
 const PORT = +process.env.PORT || 3001;
 
-const CLOUDINARY_API_KEY = "jmcappdev"
-const CLOUDINARY_API_SECRET = "756977366964151"
-const CLOUDINARY_NAME = "lqwI2S7LkJVun2h5M-U4f_VOO84"
+
 
 //  Use dev database, testing database, or production database via env variable.
 function getDatabaseUri() {
@@ -35,7 +33,4 @@ module.exports = {
     PORT,
     BCRYPT_WORK_FACTOR,
     getDatabaseUri,
-    CLOUDINARY_API_KEY,
-    CLOUDINARY_API_SECRET,
-    CLOUDINARY_NAME
 };
