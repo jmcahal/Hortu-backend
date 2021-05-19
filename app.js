@@ -139,54 +139,23 @@ app.get('/logout', function (req, res){
 
 
 
-// app.get('*', (req, res) => res.sendFile(resolve(__dirname, '../public/index.html')));
-
-
-// app.post('upload/', multerUploads, (req, res) => {
-//     if(req.file) {
-//         const file = dataUri(req).content;
-//         return uploader.upload(file).then((result) => {
-//             const image = result.url;
-//             return res.status(200).json({
-//                 messge: 'Your image has been uploded successfully to cloudinary',
-//                 data: {
-//                 image
-//             }
-//         })
-//         }).catch((err) => res.status(400).json({
-//         messge: 'someting went wrong while processing your request',
-//         data: {
-//         err
-//         }
-//     }))
-//     }
-// });
-
 app.get("/", (req, res) => {
     res.json({message: "hey! This is your server response!"})
 });
 
 // image upload API
-app.post("/upload-image", (req, res) => {
-    const data = {
-        image: req.body.image,
-    };
-    console.log(data);
+app.post("/upload-image",async(req, res) => {
     try{
-        cloudinary.uploader.upload(data.image)
-        .then((result) => {
-            res.status(200).send({
-              message: "success",
-              result,
-            });
-          })
-    }catch(error) {
-        res.status(500).send({
-          message: "failure",
-          error,
-        });
-    };
+        const fileStr = req.body.data;
+        const uploadedResponse = await cloudinary.uploader.upload(fileStr)
+        console.log(uploadedResponse);
+        res.json(uploadedResponse);
+    }catch(e){
+        console.log(e);
+        res.status(500);
+    }
 });
+
 
 // Handle 404 errors
 app.use(function (req, res, next){
