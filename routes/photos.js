@@ -49,13 +49,13 @@ router.patch("/:id", checkAuthenticated, async function (req, res, next) {
 
 // POST/ => {data} => Return {id, title, description, img, etc...}
 
-router.post("/", checkAuthenticated, async function (req, res, next) {
+router.post("/", async function (req, res, next) {
     try {
         const photo = await Photo.create(req.body);
         return res.status(201).json({ photo });
 
     }catch (err) {
-        return next(err);
+        return next(err); 
     }
 });
 
