@@ -12,7 +12,7 @@ const router = new express.Router();
 
 // GET / => {photos: [{title, description, img},..]}
 
-router.get("/", checkAuthenticated, async function (req, res, next) {
+router.get("/", async function (req, res, next) {
     const q = req.query;
     try {
         const photos = await Photo.findAll(q);
@@ -25,10 +25,10 @@ router.get("/", checkAuthenticated, async function (req, res, next) {
 
 // GET/photoId => {photo: [{title, description, img},..]}
 
-router.get("/:id", checkAuthenticated, async function (req, res, next) {
+router.get("/:postId", async function (req, res, next) {
     try {
-        const photo = await Photo.get(req.params.id);
-        return res.json({ photo });
+        const photos = await Photo.get(req.params.postId);
+        return res.json({ photos });
 
     }catch (err) {
         return next(err);

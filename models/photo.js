@@ -24,9 +24,10 @@ class Photo {
         return photosRes.rows;
     }
 
-    // Find a photo based its id.
+    // Find a photo based its post. 
+    // check for syntax
 
-    static async get(id) {
+    static async get(postId) {
         const photoRes = await db.query (`SELECT id,
                         title,
                         description,
@@ -35,14 +36,34 @@ class Photo {
                         plant_id AS "plantId",
                         post_id AS "postId"
                     FROM photos
-                    WHERE id = $1`,
-                    [id]);
-        const photo = photoRes.rows[0];
+                    WHERE post_id = $1`,
+                    [postId]);
+        const photos = photoRes.rows;
 
-        if (!photo) throw new NotFoundError(`No photo with the id: ${id}`)
+        if (!photos) throw new NotFoundError(`No photos for post with id: ${postId}`)
 
-        return photo;
+        return photos;
     };
+
+    // Find a photo based its id. 
+
+    // static async get(id) {
+    //     const photoRes = await db.query (`SELECT id,
+    //                     title,
+    //                     description,
+    //                     img,
+    //                     username,
+    //                     plant_id AS "plantId",
+    //                     post_id AS "postId"
+    //                 FROM photos
+    //                 WHERE id = $1`,
+    //                 [id]);
+    //     const photo = photoRes.rows[0];
+
+    //     if (!photo) throw new NotFoundError(`No photo with the id: ${id}`)
+
+    //     return photo;
+    // };
 
     // Update a photo given its id.
 
