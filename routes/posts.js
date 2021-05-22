@@ -36,7 +36,7 @@ router.get("/:journalId", async function (req, res, next) {
 
 // PATCH /[id] => {data} => Return {common_name, sci_name, etc...}
 
-router.patch("/:id", checkAuthenticated, async function (req, res, next) {
+router.patch("/:id", async function (req, res, next) {
     try {
         const post = await Post.update(req.params.id, req.body);
         return res.json({ post });

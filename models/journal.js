@@ -11,7 +11,8 @@ class Journal {
       static async findAll(){
         let query = `SELECT id, title,
                             description,
-                            username
+                            username,
+                            plant_id AS "plantId"
                     FROM journals`;
         const journalRes = await db.query(query);
         return journalRes.rows;
@@ -23,7 +24,8 @@ class Journal {
         const journalRes = await db.query (`SELECT id,
                         username,
                         title,
-                        description
+                        description,
+                        plant_id AS "plantId"
                     FROM journals
                     WHERE username = $1`,
                     [username]);
@@ -65,7 +67,8 @@ class Journal {
                             WHERE id = ${idVarIdx}
                             RETURNING username,
                                 title,
-                                description`;
+                                description,
+                                plant_id AS "plantId"`;
         const result = await db.query(querySql, [...values, id]);
         console.log(result);
         const journal = result.rows[0];
