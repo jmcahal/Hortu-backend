@@ -73,8 +73,7 @@ class Photo {
             data,
             {
                 tite: "title",
-                desciption: "description",
-                img: "img"
+                desciption: "description"
             }
         );
         const idVarIdx = "$" + (values.length + 1);

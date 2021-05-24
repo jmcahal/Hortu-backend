@@ -37,7 +37,7 @@ router.get("/:postId", async function (req, res, next) {
 
 // PATCH /[id] => {data} => Return {id, title, description, img, etc...}
 
-router.patch("/:id", checkAuthenticated, async function (req, res, next) {
+router.patch("/:id", async function (req, res, next) {
     try {
         const photo = await Photo.update(req.params.id, req.body);
         return res.json({ photo });
@@ -61,7 +61,7 @@ router.post("/", async function (req, res, next) {
 
 // DELETE/[id]=>{title}
 
-router.delete("/:id", checkAuthenticated, async function (req, res, next) {
+router.delete("/:id", async function (req, res, next) {
     try {
         await Photo.delete(req.params.id);
         return res.json({deleted: req.params.id });
