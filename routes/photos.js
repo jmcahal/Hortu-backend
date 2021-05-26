@@ -12,16 +12,17 @@ const router = new express.Router();
 
 // GET / => {photos: [{title, description, img},..]}
 
-router.get("/", async function (req, res, next) {
-    const q = req.query;
+router.get("/plant/:plantId", async function (req, res, next) {
     try {
-        const photos = await Photo.findAll(q);
+        const photos = await Photo.findPlantPhotos(req.params.plantId);
         return res.json({ photos });
 
     }catch (err) {
         return next(err);
     }
 });
+
+
 
 // GET/photoId => {photo: [{title, description, img},..]}
 

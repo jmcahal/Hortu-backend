@@ -8,20 +8,38 @@ const {sqlForPartialUpdate} = require('../helpers/sql');
 class Photo {
     //  functions for photos.
 
-    // To get all photos.
+    // // To get all photos.
 
-    static async findAll() {
-        let query = `SELECT  ph.title,
-                             ph.description,
-                             ph.img,
-                             ph.username,
-                             ph.plant_id,
-                             ph.post_id
-                    FROM photos ph
-                    LEFT JOIN posts AS p ON p.id = ph.post_id`
+    // static async findAll() {
+    //     let query = `SELECT  ph.title,
+    //                          ph.description,
+    //                          ph.img,
+    //                          ph.username,
+    //                          ph.plant_id,
+    //                          ph.post_id 
+    //                 FROM photos ph
+    //                 LEFT JOIN posts AS p ON p.id = ph.post_id`
 
-        const photosRes = await db.query(query);
-        return photosRes.rows;
+    //     const photosRes = await db.query(query);
+    //     return photosRes.rows;
+    // }
+
+     // To get all photos.
+
+    static async findPlantPhotos(plantId) {
+        const photoRes = await db.query( `SELECT title,
+                            description,
+                            img,
+                            username,
+                            plant_id AS "plantId",
+                            post_id As "postId" 
+                    FROM photos
+                    WHERE plant_id = $1`,
+                    [plantId]);
+
+        const photos = photoRes.rows;
+        if (!photos) throw new NotFoundError(`No photos for post with id: ${postId}`)
+        return photos;
     }
 
     // Find a photo based its post. 

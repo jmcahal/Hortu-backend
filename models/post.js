@@ -16,7 +16,10 @@ class Post {
                             username,
                             plant_id AS "plantId",
                             journal_id AS "journalId"
-                    FROM posts`;
+                    FROM posts
+                    ORDER BY id
+                    DESC
+                    LIMIT 10`;
         const postsRes = await db.query(query);
         return postsRes.rows;
     }
