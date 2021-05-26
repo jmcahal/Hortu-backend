@@ -31,7 +31,8 @@ class Post {
                         title,
                         post_body AS "postBody"
                     FROM posts
-                    WHERE journal_id = $1`,
+                    WHERE journal_id = $1
+                    ORDER BY id`,
                     [journalId]);
         const posts = postRes.rows;
 

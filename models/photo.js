@@ -36,7 +36,8 @@ class Photo {
                         plant_id AS "plantId",
                         post_id AS "postId"
                     FROM photos
-                    WHERE post_id = $1`,
+                    WHERE post_id = $1
+                    ORDER BY id`,
                     [postId]);
         const photos = photoRes.rows;
 

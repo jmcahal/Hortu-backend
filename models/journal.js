@@ -27,7 +27,8 @@ class Journal {
                         description,
                         plant_id AS "plantId"
                     FROM journals
-                    WHERE username = $1`,
+                    WHERE username = $1
+                    ORDER BY id`,
                     [username]);
         return journalRes.rows;
     }
