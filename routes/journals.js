@@ -32,17 +32,18 @@ router.get("/:username", async function (req, res, next) {
         return next(err);
     }
 });
-// GET /[id] => {title, description}
 
-// router.get("/:id", async function (req, res, next) {
-//     try {
-//         const journal = await Journal.get(req.params.id);
-//         return res.json({ journal });
+// GET / => {journals: [{title, description},..]}
 
-//     }catch (err) {
-//         return next(err);
-//     }
-// });
+router.get("/plants/:plantId", async function (req, res, next) {
+    try {
+        const journals = await Journal.get(req.params.plantId);
+        return res.json({ journals });
+
+    }catch (err) {
+        return next(err);
+    }
+});
 
 // PATCH /[id] => {data} => Return {common_name, sci_name, etc...}
 
