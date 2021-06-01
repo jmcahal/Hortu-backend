@@ -4,8 +4,8 @@
 
 const express = require("express");
 
-const { BadRequestError } = require("../expressError");
-const { checkAuthenticated } = require("../middleware/auth");
+// const { BadRequestError } = require("../expressError");
+// const { checkAuthenticated } = require("../middleware/auth");
 const Journal = require("../models/journal");
 
 const router = new express.Router();

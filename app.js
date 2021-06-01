@@ -1,11 +1,8 @@
 const express = require('express');
 const cors = require("cors");
 const morgan = require("morgan");
-const { NotFoundError, UnauthorizedError } = require("./expressError");
-const fs = require('fs');
-const bodyParser = require("body-parser");
+const { NotFoundError } = require("./expressError");
 const { urlencoded, json } = require('body-parser');
-// const { resolve } = require('path');
 
 const cloudinary = require('cloudinary').v2;
 const {CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_NAME } = require('./config');
@@ -14,25 +11,14 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-console.log(CLOUDINARY_NAME);
 
-
-// const { cloudinaryConfig, uploader } = require('./utils/cloudinary');
-// const {multerUploads, dataUri} = require("./middleware/multer") 
 const plantRoutes = require("./routes/plants");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
 const photoRoutes = require("./routes/photos");
 const journalRoutes = require("./routes/journals");
-// const authRoutes = require("./routes/auth");
  
-
-
-
 const db = require('./db');
-
-const User = require("./models/user");
-
 const app = express();
 
 app.use(cors());
@@ -41,8 +27,6 @@ app.use(morgan("tiny"));
 app.use(express.urlencoded({limit:'50mb', extended: true}));
 app.use(urlencoded({extended: true}));
 app.use(json());
-
-// app.use('*', cloudinaryConfig);
 
 //session-related libraries
 const session = require("express-session");
@@ -53,7 +37,7 @@ const bcrypt = require("bcrypt");
 
 //Setting up our session
 const { SECRET_KEY } = require('./config');
-const { checkNotAuthenticated } = require('./middleware/auth');
+
 app.use(session({
     secret: SECRET_KEY,
     resave: false,
@@ -64,15 +48,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); //Telling our app to use passport for dealing with our sessions
 
-// app.use(express.static(resolve(__dirname)));
-
-
 app.use("/plants", plantRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/photos", photoRoutes);
 app.use("/journals", journalRoutes);
-// app.use("/", authRoutes);
 
 //setting up our local strategy
 passport.use('local', new LocalStrategy({passReqToCallBack: true},( username, password, cb )=> {
@@ -80,7 +60,6 @@ passport.use('local', new LocalStrategy({passReqToCallBack: true},( username, pa
     db.query(`SELECT id, username, password,  is_admin AS "isAdmin" FROM users where username=$1`, [username], (err, result) => {
         if(err){
             return cb(err);
-
         }
         if(result.rows.length > 0){
             const first = result.rows[0];
@@ -103,8 +82,6 @@ passport.use('local', new LocalStrategy({passReqToCallBack: true},( username, pa
     })
 }));
 
-
-
 passport.serializeUser(function(user, done){
     console.log("serialize user is executing")
     done(null, user.id);
@@ -120,7 +97,6 @@ passport.deserializeUser(function(id, done){
     });
 });
 
-
 app.post("/login", passport.authenticate('local'), (req, res, next) => {
     
     console.log(` response: ${req.user.user}`);
@@ -134,10 +110,8 @@ app.get('/logout', function (req, res){
     console.log("logging out");
     req.logOut();
     console.log("logged out");
-    res.redirect('/plants')
+    res.redirect('/')
 });
-
-
 
 app.get("/", (req, res) => {
     res.json({message: "hey! This is your server response!"})
@@ -155,7 +129,6 @@ app.post("/upload-image",async(req, res) => {
         res.status(500);
     }
 });
-
 
 // Handle 404 errors
 app.use(function (req, res, next){

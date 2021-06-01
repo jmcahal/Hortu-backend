@@ -4,10 +4,9 @@
 
 const express = require("express");
 
-const { BadRequestError } = require("../expressError");
-const { checkAuthenticated } = require("../middleware/auth");
+// const { BadRequestError } = require("../expressError");
+// const { checkAuthenticated } = require("../middleware/auth");
 const User = require('../models/user');
-
 const router = new express.Router();
 
 // GET / => {users: [{username, password, first_name, etc.},..]}

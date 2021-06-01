@@ -71,7 +71,19 @@ VALUES ('Tomatoes', 'Solanum lycopersicum',
         'sun to part shade in rich, well-drained, moist soil. pH Neutral is preferred.',
         'Cut flower. Edible flower.',
         'After seedlings have 3-5 true leaves, grow at 50-55°F/10-13°C nights and 60°F/16°C days. Pinch back to 1 1/2-2" when seedlings are about 3-4" 
-            tall to encourage branching.');
+            tall to encourage branching.'),
+        ('Dahlia', 'Dahlia pinnata',
+        NULL, NULL,
+        'Plant in spring, after the ground has thawed and there is no longer danger of frost. Bulbs and plants may sprout, this is harmless to the buld, do not remove sprout when planting.',
+        NULL,
+        NULL,
+        "Bloom time: summer to Fall. After flowering season, remove and cut back foliage to promote next year's growth.",
+        NULL,
+        "Plant in clusters. Plant bulb 6 inches deep. Plant 1 bulb per square foot.",
+        "36-40in"
+        "Full sun",
+        "Cut flower",
+        "Hardiness zone: 8-10");
 
 INSERT INTO journals (title, 
                     description,
