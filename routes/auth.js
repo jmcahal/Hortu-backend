@@ -19,7 +19,6 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/logout', function(req, res){
     req.logOut();
-    // users for now
     res.redirect('/users');
 });
 

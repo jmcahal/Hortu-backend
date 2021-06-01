@@ -3,7 +3,6 @@
 // Routes for post
 
 const express = require("express");
-
 const { BadRequestError } = require("../expressError");
 const { checkAuthenticated } = require("../middleware/auth");
 const Post = require('../models/post');

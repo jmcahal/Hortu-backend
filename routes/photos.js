@@ -22,8 +22,6 @@ router.get("/plant/:plantId", async function (req, res, next) {
     }
 });
 
-
-
 // GET/photoId => {photo: [{title, description, img},..]}
 
 router.get("/:postId", async function (req, res, next) {

@@ -41,18 +41,6 @@ class Post {
 
         if (!posts) throw new NotFoundError(`No posts with the journal id: ${journalId}`)
 
-        // const photoRes = await db.query (`SELECT id,
-        //                 title,
-        //                 description,
-        //                 img,
-        //                 username,
-        //                 plant_id AS "plantId",
-        //                 post_id AS "postId"
-        //             FROM photos
-        //             WHERE post_id = $1`,
-        //             [id]);
-        // post.photos = photoRes.rows;
-
         return posts;
     };
 
