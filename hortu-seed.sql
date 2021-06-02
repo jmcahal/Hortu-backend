@@ -77,13 +77,13 @@ VALUES ('Tomatoes', 'Solanum lycopersicum',
         'Plant in spring, after the ground has thawed and there is no longer danger of frost. Bulbs and plants may sprout, this is harmless to the buld, do not remove sprout when planting.',
         NULL,
         NULL,
-        "Bloom time: summer to Fall. After flowering season, remove and cut back foliage to promote next year's growth.",
+        'Bloom time: summer to Fall. After flowering season, remove and cut back foliage to promote growth next year.',
         NULL,
-        "Plant in clusters. Plant bulb 6 inches deep. Plant 1 bulb per square foot.",
-        "36-40in"
-        "Full sun",
-        "Cut flower",
-        "Hardiness zone: 8-10");
+        'Plant in clusters. Plant bulb 6 inches deep. Plant 1 bulb per square foot.',
+        '36-40in',
+        'Full sun',
+        'Cut flower',
+        'Hardiness zone: 8-10');
 
 INSERT INTO journals (title, 
                     description,
